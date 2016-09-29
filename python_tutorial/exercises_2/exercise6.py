@@ -33,9 +33,9 @@ def checkDigits(num_list):
 # Returns a formatted string.
 def formatColumns(num_list):
     formatted_string = ""
-    line_1 = "|"
-    line_2 = "|"
-    line_3 = "|"
+    line_1 = ""
+    line_2 = ""
+    line_3 = ""
     for i in range (9):
         if (len(num_list[i]) == 1):
             line_1 += 2*" " + num_list[i] + "|"
@@ -46,7 +46,7 @@ def formatColumns(num_list):
         if (len(num_list[i]) == 3):
             line_3 += num_list[i] + "|"
     # print(line_1, line_2, line_3)
-    formatted_string = line_1 + "\n" + line_2 + "\n" + line_3
+    formatted_string = line_1[:-1] + "\n" + line_2[:-1] + "\n" + line_3[:-1]
     return formatted_string
 
 # Take 9 numbers from the user
