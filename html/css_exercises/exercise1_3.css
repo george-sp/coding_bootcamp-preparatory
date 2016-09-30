@@ -1,0 +1,15 @@
+table {
+  width: 100%
+}
+
+table, th, td, tr {
+  border: 1px solid black
+}
+
+.top_header {
+  background-color:orange;
+}
+
+.center {
+  text-align:center;
+}

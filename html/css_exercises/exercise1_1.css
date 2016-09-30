@@ -1,0 +1,13 @@
+h1 {
+  text-align:center;
+  color:blue;
+  background-color:yellow
+}
+
+p.center_paragraph{
+  text-align:center;
+}
+
+span {
+  color:red;
+}
