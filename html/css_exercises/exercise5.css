@@ -1,0 +1,21 @@
+body {
+  background-color: beige;
+  font-family: verdana;
+}
+
+h1 {
+  text-align: center;
+}
+
+#spiral {
+  border: 1px solid black;
+  width: 70%;
+  margin: auto;
+  background-image: url("images/spiral42.gif");
+  background-repeat: repeat-y;
+  background-color: white;
+}
+
+.text {
+  margin-left: 50px;
+}
