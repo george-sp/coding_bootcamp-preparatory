@@ -1,0 +1,59 @@
+body {
+  font-family: arial;
+}
+
+h1 {
+  text-align: center;
+}
+
+h2 {
+  color: blue;
+}
+
+img {
+  display: block;
+  margin: auto;
+}
+
+table, tr, th, td {
+  border: 1px solid black;
+}
+
+pre {
+  white-space: pre-wrap;
+}
+
+hr {
+  margin-top: 15px;
+}
+
+.bolder {
+  font-weight: 900;
+}
+
+.italic {
+  font-style:italic;
+}
+
+.underlined {
+  text-decoration:underline;
+}
+
+.main_menu {
+  display: block;
+  text-align: center;
+  background-color: orange;
+}
+
+.footer {
+  background-color: yellow;
+  text-align: center;
+}
+
+.contact_info {
+  text-align:center;
+}
+
+.url {
+  text-align: center;
+}
