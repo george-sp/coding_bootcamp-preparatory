@@ -1,0 +1,75 @@
+<!DOCTYPE>
+<html>
+  <head>
+    <title>Example using empty elements</title>
+  </head>
+  <body>
+    <form action="myscript.php" method="post" name="myform" id=" form1">
+      <h1>Input Types</h1>
+      <label for="surname_id">Surname:</label>
+      <input type="text" name="surname" id="surname_id" placeholder="give surname" required>
+      <br><br>
+      <label>Password:
+        <input type="password" name="password" id="password_id" placeholder="give password" required>
+      </label>
+      <br><br>
+      <label for="hidden_id">Hidden:</label>
+      <input type="hidden" name="hidden" id="hidden_id" value="hidden_value" required>
+      <br><br>
+      <label for="checkbox">Checkbox:</label>
+      <input type="checkbox" name="checkbox" id="checkbox" value="checkbox_value" required>check the box
+      <br><br>
+      Do you agree?
+      <input type="radio" name="agreement" value="yes">Yes
+      <input type="radio" name="agreement" value="no">No
+      <br><br>
+      <input type="button" value="click now!">
+      <br><br>
+      <input type="file" name="file">
+      <br><br>
+      Please select your OS:
+      <select name="system">
+        <option value="windows">Windows</option>
+        <option value="linux" selected="selected">Linux</option>
+        <option value="mac">Mac</option>
+      </select>
+      <br><br>
+      Please select your favorite fruits:
+      <select name="fruits" size="6" multiple="multiple">
+        <option value="apple">apple</option>
+        <option value="banana">banana</option>
+        <option value="orange" selected="selected">orange</option>
+        <option value="pear">pear</option>
+        <option value="blackberry">blackberry</option>
+        <option value="watermelon" selected="selected">watermelon</option>
+      </select>
+      <br><br>
+      Please select Car:
+      <select name="cars" multiple="multiple" size="6">
+        <optgroup label="Swedish Cars">
+          <option value="volvo">Volvo</option>
+          <option value="saab">Saab</option>
+        </optgroup>
+        <optgroup label="German Cars">
+          <option value="mercedes">Mercedes</option>
+          <option value="audi">Audi</option>
+        </optgroup>
+      </select>
+      <br><br>
+      <fieldset style="width:50%">
+        <legend>Personal Data</legend>
+        Name: <input type="text" name= "namefield">
+        <br>
+        Email: <input type= "email" name= "emailfield">
+        <br>
+      </fieldset>
+      <br><br>
+      <input type="submit" value="Submit">
+      <input type="reset" value="Reset">
+      <br><br>
+      <input type="image" src="images/register.jpg">
+      <br><br>
+      <textarea name="message" cols="100" rows="10" placeholder="type your message">This is a textarea</textarea>
+    </form>
+  </body>
+</html>
