@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Άσκηση 14</title>
+  </head>
+  <body>
+    <h1>Registration Form</h1>
+    <div style="width:400px">
+      <form>
+        <fieldset>
+          <legend>Personal Data</legend>
+          <div style="margin-bottom:5px;">
+            <label for="username_id" style="display:inline-block; width:80px;">username:</label>
+            <input type="text" name="username" id="username_id" required>
+          </div>
+          <div style="margin-bottom:5px;">
+            <label for="password_id" style="display:inline-block; width:80px;">password:</label>
+            <input type="password" name="password" id="password_id" required>
+          </div>
+          <div style="margin-bottom:5px;">
+          <label style="display:inline-block; width:80px;">preferences:</label>
+            <select name="preferences" required>
+              <option value="">**********</option>
+              <option value="1">pref 2</option>
+              <option value="2">pref 3</option>
+              <option value="3">pref 4</option>
+              <option value="4">pref 5</option>
+            </select>
+          </div>
+          <div style="margin-bottom:5px;">
+            <label style="display:inline-block; width:80px;">gender:</label>
+            <label><input type="radio" name="gender" value="male" required>Male</label>
+            <label><input type="radio" name="gender" value="female" required>Female</label>
+          </div>
+          <div style="margin-bottom:5px;">
+            <label style="display:inline-block; width:80px;">age:</label><input type="checkbox" name="age" required>
+          </div>
+          <div>
+            <input type="submit" value="Register" style="margin-left:80px;"> <input type="reset" value="Clear Fields">
+          </div>
+        </fieldset>
+      </form>
+    </div>
+  </body>
+</html>

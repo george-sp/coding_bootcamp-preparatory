@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>A form example</title>
+  </head>
+  <body>
+    <form action="myscript.php" method="POST" name="myform">
+      <fieldset>
+        <legend>Personal Data</legend>
+          Name: <input type="text" name= "namefield">
+          <br>
+          Email: <input type= "email" name= "emailfield">
+      </fieldset>
+      <fieldset>
+        <legend>Preferences</legend>
+          Please select your favorite sports:
+          <select name="select" size="6" multiple="multiple">
+            <option value="football">football</option>
+            <option value="basket">basket</option>
+            <option value="tennis">tennis</option>
+            <option value="polo">polo</option>
+            <option value="volley">volley</option>
+            <option value="table tennis">table tennis</option>
+          </select>
+      </fieldset>
+      <input type="submit" value="next" name= "sbutton1">
+      <input type="reset" value="clear" name= "rbuton1">
+    </form>
+  </body>
+</html>

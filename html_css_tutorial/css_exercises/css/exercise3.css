@@ -1,0 +1,31 @@
+.header {
+  text-align:center;
+  background-color:darkblue;
+  padding-bottom: 1px;
+}
+
+.header_name {
+  color:yellow;
+}
+
+.header_address {
+  color:white;
+}
+
+.section {
+  background-color:orange;
+}
+
+.date {
+  font-weight: bold;
+  color:blue;
+}
+
+.job_title {
+  font-weight: bold;
+  color:green;
+}
+
+.degree {
+  font-style: italic;
+}
