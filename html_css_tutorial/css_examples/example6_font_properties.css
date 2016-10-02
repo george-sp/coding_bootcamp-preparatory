@@ -1,0 +1,14 @@
+body {
+  font-family:Tahoma;
+  font-size:18px;
+}
+
+strong {
+  color:green;
+}
+
+span {
+  color:blue;
+  font-variant:small-caps;
+  font-weight:bold;
+}
