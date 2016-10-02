@@ -1,0 +1,26 @@
+body {
+  font-family:Tahoma;
+  font-size:18px;
+}
+
+strong {
+  color:green;
+  word-spacing:8px;
+}
+
+span {
+  color:blue;
+  vertical-align:middle;
+  line-height:30px;
+}
+
+em {
+  color:red;
+  text-decoration:underline;
+  text-transform:uppercase;
+  letter-spacing:3px;
+}
+
+p {
+  text-indent:40px;
+}
