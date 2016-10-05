@@ -1,4 +1,5 @@
-from flask import Flask
+from flask import Flask, send_from_directory
+import os
 app = Flask(__name__)
 
 @app.route('/')
@@ -29,6 +30,11 @@ def login():
         do_the_login()
     else:
         show_the_login_form()
+
+@app.route('/static/css/stylesheet.css')
+def serve_static_css(filename):
+    root_dir = os.path.dirname(os.getcwd())
+    return send_from_directory(os.path.join(root_dir, 'static', 'css'), filename)
 
 if __name__ == '__main__':
    app.run(debug = True)
