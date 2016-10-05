@@ -1,4 +1,4 @@
-from flask import Flask, send_from_directory
+from flask import Flask, send_from_directory, render_template
 import os
 app = Flask(__name__)
 
@@ -8,8 +8,8 @@ def hello_world():
 
 @app.route('/hello/')
 @app.route('/hello/<name>')
-def hello_name(name):
-    return 'Hello %s!' % name
+def hello(name):
+    return render_template('hello.html', name=name)
 
 @app.route('/post/<int:post_id>')
 def show_post(post_id):
