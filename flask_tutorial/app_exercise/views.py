@@ -23,6 +23,16 @@ def login():
             return redirect(url_for('welcome'))
     return render_template('new.html')
 
+@app.route('/logout')
+def logout():
+    if session['logged_in'] == True:
+        # Remove the email from the session
+        session.pop('email', None)
+        session['logged_in'] = False
+        return render_template('logout.html')
+    else:
+        return redirect(url_for('new'))
+
 @app.route('/welcome')
 def welcome():
     if 'email' in session:
