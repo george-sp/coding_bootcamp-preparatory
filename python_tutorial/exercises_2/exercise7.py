@@ -18,7 +18,6 @@ date_2 = dates[1].split("/")
 for i in range(3):
     date_1[i] = int(date_1[i])
     date_2[i] = int(date_2[i])
-print(date_1, date_2)
 
 # c1 = 365y1 + ⌊y1/4⌋ − ⌊y1/100⌋ + ⌊y1/400⌋ + ⌊(306m1+5)/10⌋ + (d1−1)
 c1 = 365*date_1[2] + date_1[2]//4 - date_1[2]//100 + date_1[2]//400 + (306*date_1[1] + 5)//10 + (date_1[0] - 1)
