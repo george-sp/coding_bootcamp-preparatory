@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>New Member</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/w3.css') }}">
+  </head>
+  <body>
+    <p></p>
+    <div class="flashes">
+      {% for message in get_flashed_messages() %}
+        {{ message }}
+      {% endfor %}
+    </div>
+    <form action="/login" method = "post">
+      <label class="w3-blue" for = "name">Name</label>
+      <input class="w3-input" type = "text" name = "name" placeholder = "name"/>
+      <br>
+      <label class="w3-blue" for = "surname">Surname</label>
+      <input class="w3-input" type = "text" name = "surname" placeholder = "surname"/>
+      <br>
+      <label class="w3-blue" for = "email">Email</label>
+      <input class="w3-input" type = "text" name = "email" placeholder = "email"/>
+      <br>
+      <label class="w3-blue" for = "password">Password</label>
+      <input class="w3-input" type = "password" name = "password" placeholder = "password"/>
+      <br>
+      <input class="w3-round-large w3-margin" id="btnSignUp" type = "submit" value = "Sign up"/>
+    </form>
+  </body>
+</html>
