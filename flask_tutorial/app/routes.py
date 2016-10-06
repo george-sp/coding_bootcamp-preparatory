@@ -1,4 +1,4 @@
-from flask import Flask, url_for, flash, send_from_directory, request, redirect, render_template
+from flask import Flask, url_for, flash, send_from_directory, request, redirect, render_template, session
 from forms import ContactForm
 
 app = Flask(__name__)
@@ -12,5 +12,7 @@ def new():
                 or not request.form['email'] or not request.form['password']):
             flash('Please fill all the fields.', 'error')
         else:
-            return redirect(url_for('index'))
+            # to set a session variable use the statement
+            session['name'] = request.form['name']
+            return login()
     return render_template('new.html')
