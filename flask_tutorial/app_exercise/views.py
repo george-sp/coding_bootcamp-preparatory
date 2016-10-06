@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, flash
+from flask import Flask, render_template, request, flash, session, redirect, url_for
 from form import SignUpForm
 
 app = Flask(__name__)
@@ -17,7 +17,17 @@ def login():
                 or not request.form['email'] or not request.form['password']):
             flash('All the fields are required to sign up.', 'error')
         # If there are errors, open the new.html
+        else:
+            session['logged_in'] = True
+            session['email'] = request.form['email']
+            return redirect(url_for('welcome'))
     return render_template('new.html')
+
+@app.route('/welcome')
+def welcome():
+    if 'email' in session:
+        email = session['email']
+    return render_template('hello.html', email=email)
 
 if __name__ == '__main__':
     app.run(debug = True)
