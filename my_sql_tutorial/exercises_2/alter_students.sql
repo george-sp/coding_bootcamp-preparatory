@@ -1,0 +1,5 @@
+ALTER TABLE `bootcamp`.`students` 
+CHANGE COLUMN `students id` `StID` INT(11) NOT NULL ,
+CHANGE COLUMN `first name` `FName` VARCHAR(45) NULL DEFAULT NULL ,
+CHANGE COLUMN `last name` `LName` VARCHAR(45) NULL DEFAULT NULL ,
+CHANGE COLUMN `date of birth` `DateOfBirth` DATE NULL DEFAULT NULL ;
