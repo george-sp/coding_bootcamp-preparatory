@@ -15,6 +15,11 @@ print(prompt_message)
 rows = []
 while True:
     row = input()
+    if ".txt" in row:
+        maze_file = open(row, encoding="utf-8")
+        rows_file = maze_file.read()
+        print()
+        break
     if row:
         rows.append(row)
     else:
@@ -22,5 +27,8 @@ while True:
 
 if (debug):
     print("Debugging:")
-    display_rows = '\n'.join(rows)
-    print(display_rows)
+    if rows:
+        display_rows = '\n'.join(rows)
+        print(display_rows)
+    elif rows_file:
+        print(rows_file)
