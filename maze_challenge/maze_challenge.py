@@ -60,18 +60,39 @@ def getMazeCoordinates():
             maze_coords[r][c] = [r+1, c+1, 0]
     return maze_coords
 
+"""
+Finds and returns the coordinates of the starting and ending maze points.
+"""
+def getMazeStartEnd(height, width):
+    start_point = []
+    end_point = []
+    for r in range (height):
+        for c in range (width):
+            if maze[r][c] == 'G':
+                end_point = maze_coords[r][c]
+            if maze[r][c] == 'S':
+                start_point = maze_coords[r][c]
+    return start_point, end_point
+
 maze = getMaze().split("\n")
 maze_rows_len, maze_cols_len = getMazeDimensions(maze)
 maze = shapeMaze(maze, maze_rows_len)
 maze_coords = getMazeCoordinates()
+maze_start, maze_goal = getMazeStartEnd(height=maze_rows_len, width=maze_cols_len)
 
 if (debug):
     print("  Debugging  \n-------------")
     print("Number of rows:", maze_rows_len)
     print("Number of columns:", maze_cols_len)
+    print("Start:", maze_start)
+    print("Goal:", maze_goal)
     print("The Maze:")
-    for row in maze:
-        print(row)
+    print("  ", end="")
+    for i in range (maze_cols_len):
+        print(" ", i + 1, " ", end="")
+    print()
+    for i in range (maze_rows_len):
+        print(i + 1, maze[i])
     print("The Coordinates:")
     for row in maze_coords:
         print(row)
