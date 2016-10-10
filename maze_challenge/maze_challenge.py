@@ -83,6 +83,22 @@ maze_start, maze_goal = getMazeStartEnd(height=maze_rows_len, width=maze_cols_le
 # The queue will be initialized with one coordinate, the end coordinate.
 list_coords = [maze_goal]
 
+step_counter = 1
+# Go through every element in the queue.
+for coord in list_coords:
+    # Create a list of the four adjacent cells
+    # with a counter variable of the current element's counter variable +1
+    adjacent_coords = [
+    [coord[0] - 1, coord[1], step_counter], # top adjacent
+    [coord[0], coord[1] - 1, step_counter], # left adjacent
+    [coord[0] + 1, coord[1], step_counter], # bottom adjacent
+    [coord[0], coord[1] + 1, step_counter]  # right adjacent
+    ]
+
+
+    if (debug):
+        print(adjacent_coords)
+
 
 if (debug):
     print("  Debugging  \n-------------")
