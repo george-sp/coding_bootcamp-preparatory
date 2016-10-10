@@ -30,17 +30,31 @@ def getMaze():
             # If user hits enter join all rows and create the maze.
             return '\n'.join(rows)
 
+"""
+Seperate each symbol in each row.
+Depict the maze as a list of lists.
+"""
 def shapeMaze(maze, maze_num_rows):
     for r in range (maze_num_rows):
         maze[r] = list(maze[r])
     return maze
 
+"""
+Returns the number of rows and
+the number of columns of the maze.
+"""
+def getMazeDimensions(maze):
+    return len(maze), len(maze[0])
+
 maze = getMaze().split("\n")
-maze_rows_len = len(maze)
+maze_rows_len, maze_cols_len = getMazeDimensions(maze)
 maze = shapeMaze(maze, maze_rows_len)
+
+
 
 if (debug):
     print("  Debugging  \n-------------")
     print("Number of rows:", maze_rows_len)
+    print("Number of columns:", maze_cols_len)
     for row in maze:
         print(row)
