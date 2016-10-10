@@ -49,12 +49,12 @@ def getMazeDimensions(maze):
 """
 Returns the coordinates of the maze structure.
 """
-def getMazeCoordinates():
+def getMazeCoordinates(height, width):
     # Initialize a list of (maze_rows_len) lists of (maze_cols_len) lists.
-    maze_coords = [[[] for y in range(maze_cols_len)] for x in range(maze_rows_len)]
+    maze_coords = [[[] for y in range(width)] for x in range(height)]
     # Iterate through the maze_coords list and set the appropriate coordinates.
-    for r in range (maze_rows_len):
-        for c in range (maze_cols_len):
+    for r in range (height):
+        for c in range (width):
             # The third element is a counter variable.
             # So, it is assigned to 0 during the initialization.
             maze_coords[r][c] = [r+1, c+1, 0]
@@ -77,7 +77,7 @@ def getMazeStartEnd(height, width):
 maze = getMaze().split("\n")
 maze_rows_len, maze_cols_len = getMazeDimensions(maze)
 maze = shapeMaze(maze, maze_rows_len)
-maze_coords = getMazeCoordinates()
+maze_coords = getMazeCoordinates(height=maze_rows_len, width=maze_cols_len)
 maze_start, maze_goal = getMazeStartEnd(height=maze_rows_len, width=maze_cols_len)
 
 if (debug):
