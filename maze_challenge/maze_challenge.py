@@ -55,9 +55,7 @@ def getMazeCoordinates(height, width):
     # Iterate through the maze_coords list and set the appropriate coordinates.
     for r in range (height):
         for c in range (width):
-            # The third element is a counter variable.
-            # So, it is assigned to 0 during the initialization.
-            maze_coords[r][c] = [r+1, c+1, 0]
+            maze_coords[r][c] = [r+1, c+1]
     return maze_coords
 
 """
@@ -92,11 +90,13 @@ maze = shapeMaze(maze, maze_rows_len)
 maze_coords = getMazeCoordinates(height=maze_rows_len, width=maze_cols_len)
 maze_start, maze_goal = getMazeStartEnd(height=maze_rows_len, width=maze_cols_len)
 maze_blocks = getMazeBlocks(height=maze_rows_len, width=maze_cols_len)
+
 # List of coordinates which will be used as a queue.
 # The queue will be initialized with one coordinate, the end coordinate.
+# Each coordinate will also have a counter variable attached.
+step_counter = 0
+maze_goal.append(step_counter)
 list_coords = [maze_goal]
-
-step_counter = 1
 # Go through every element in the queue.
 for coord in list_coords:
     # Create a list of the four adjacent cells
