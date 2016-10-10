@@ -79,6 +79,10 @@ maze_rows_len, maze_cols_len = getMazeDimensions(maze)
 maze = shapeMaze(maze, maze_rows_len)
 maze_coords = getMazeCoordinates(height=maze_rows_len, width=maze_cols_len)
 maze_start, maze_goal = getMazeStartEnd(height=maze_rows_len, width=maze_cols_len)
+# List of coordinates which will be used as a queue.
+# The queue will be initialized with one coordinate, the end coordinate.
+list_coords = [maze_goal]
+
 
 if (debug):
     print("  Debugging  \n-------------")
@@ -93,6 +97,8 @@ if (debug):
     print()
     for i in range (maze_rows_len):
         print(i + 1, maze[i])
-    print("The Coordinates:")
+    print("The Maze Coordinates:")
     for row in maze_coords:
         print(row)
+    print("List of coordinates:")
+    print(list_coords)
