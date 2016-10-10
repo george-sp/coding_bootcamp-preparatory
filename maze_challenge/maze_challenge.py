@@ -108,8 +108,12 @@ for coord in list_coords:
     [coord[0], coord[1] + 1]  # right adjacent
     ]
 
+    for cell in adjacent_coords:
+        if (cell in maze_blocks):
+            adjacent_coords.remove(cell)
+
     if (debug):
-        print(adjacent_coords)
+        print("Adjacent cells:", adjacent_coords)
 
 
 if (debug):
