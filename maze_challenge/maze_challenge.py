@@ -108,9 +108,16 @@ for coord in list_coords:
     [coord[0], coord[1] + 1]  # right adjacent
     ]
 
-    for cell in adjacent_coords:
-        if (cell in maze_blocks):
+    # Use a copy the list so that we can iterate and modify at the same time.
+    adjacent_coords_copy = adjacent_coords.copy()
+    for cell in adjacent_coords_copy:
+        # Check if the cell is out of the border.
+        if (cell[0] > maze_rows_len or cell[1] > maze_cols_len):
             adjacent_coords.remove(cell)
+        # Check if the cell is a block.
+        elif (cell in maze_blocks):
+            adjacent_coords.remove(cell)
+
 
     if (debug):
         print("Adjacent cells:", adjacent_coords)
