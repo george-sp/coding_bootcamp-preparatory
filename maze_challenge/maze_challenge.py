@@ -1,5 +1,5 @@
 # If debug is True, debbuging messages will be logged on execution.
-debug = False
+debug = True
 
 """
 Prompt user to create a maze now(row by row input)
@@ -30,9 +30,17 @@ def getMaze():
             # If user hits enter join all rows and create the maze.
             return '\n'.join(rows)
 
-maze = getMaze()
-print(maze)
+def shapeMaze(maze, maze_num_rows):
+    for r in range (maze_num_rows):
+        maze[r] = list(maze[r])
+    return maze
+
+maze = getMaze().split("\n")
+maze_rows_len = len(maze)
+maze = shapeMaze(maze, maze_rows_len)
 
 if (debug):
-    print("Debugging:")
-    print(maze)
+    print("  Debugging  \n-------------")
+    print("Number of rows:", maze_rows_len)
+    for row in maze:
+        print(row)
