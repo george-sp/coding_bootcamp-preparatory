@@ -46,15 +46,32 @@ the number of columns of the maze.
 def getMazeDimensions(maze):
     return len(maze), len(maze[0])
 
+"""
+Returns the coordinates of the maze structure.
+"""
+def getMazeCoordinates():
+    # Initialize a list of (maze_rows_len) lists of (maze_cols_len) lists.
+    maze_coords = [[[] for y in range(maze_cols_len)] for x in range(maze_rows_len)]
+    # Iterate through the maze_coords list and set the appropriate coordinates.
+    for r in range (maze_rows_len):
+        for c in range (maze_cols_len):
+            # The third element is a counter variable.
+            # So, it is assigned to 0 during the initialization.
+            maze_coords[r][c] = [r+1, c+1, 0]
+    return maze_coords
+
 maze = getMaze().split("\n")
 maze_rows_len, maze_cols_len = getMazeDimensions(maze)
 maze = shapeMaze(maze, maze_rows_len)
-
-
+maze_coords = getMazeCoordinates()
 
 if (debug):
     print("  Debugging  \n-------------")
     print("Number of rows:", maze_rows_len)
     print("Number of columns:", maze_cols_len)
+    print("The Maze:")
     for row in maze:
+        print(row)
+    print("The Coordinates:")
+    for row in maze_coords:
         print(row)
