@@ -1,3 +1,5 @@
+#! /usr/bin/env python3
+
 # If debug is True, debbuging messages will be logged on execution.
 debug = True
 
