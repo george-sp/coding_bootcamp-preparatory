@@ -1,5 +1,7 @@
 #! /usr/bin/env python3
 
+import copy
+
 # If debug is True, debbuging messages will be logged on execution.
 debug = True
 
@@ -85,6 +87,39 @@ def getMazeBlocks(height, width):
                 block_points.append(maze_coords[r][c])
     return block_points
 
+
+"""
+Print maze in terms of X, G, S
+"""
+def printMaze(maze_columns_length, maze_rows_length, maze_shaped):
+	print("  ", end="")
+	for i in range (maze_cols_len):
+		print(" ", i + 1, " ", end="")
+	print()
+	for i in range (maze_rows_len):
+		print(i + 1, maze[i])
+
+"""
+Print the  coordinates of the maze
+"""
+def printMazeCoordinates(maze_coordinates):
+	for row in maze_coordinates:
+		print(row)
+
+"""
+Print maze solution in terms of X, G, S and numbers for each step-cell
+"""
+def printMazeSolution(maze_columns_length, maze_rows_length, maze_shaped, maze_solution):
+	maze_shaped_solution = copy.deepcopy(maze_shaped)
+	# print("maze_shaped_copy: ", maze_shaped_solution)
+	# print("maze_shaped_copy[0]: ", maze_shaped_solution[0])
+	# print("maze_shaped_copy[0][1]: ", maze_shaped_solution[0][1])
+	for solution_step in maze_solution:
+		maze_shaped_solution[solution_step[0] - 1][solution_step[1] - 1] = str(solution_step[2])
+
+	for row in maze_shaped_solution:
+		print(row)
+
 """
 Call this method recursively and search for the exit path.
 """
@@ -158,12 +193,6 @@ maze_coords = getMazeCoordinates(height=maze_rows_len, width=maze_cols_len)
 maze_start, maze_goal = getMazeStartEnd(height=maze_rows_len, width=maze_cols_len)
 maze_blocks = getMazeBlocks(height=maze_rows_len, width=maze_cols_len)
 
-step_counter = 0
-maze_start.append(step_counter)
-list_coords = []
-
-searchNeighboringCoords(maze_start, [])
-
 if (debug):
     print("--------------------------\n\tDebugging\n--------------------------")
     print("Number of rows:", maze_rows_len)
@@ -171,17 +200,23 @@ if (debug):
     print("Start:", maze_start)
     print("Goal:", maze_goal)
     print("Blocks:", maze_blocks)
+
     print("The Maze:")
-    print("  ", end="")
-    for i in range (maze_cols_len):
-        print(" ", i + 1, " ", end="")
-    print()
-    for i in range (maze_rows_len):
-        print(i + 1, maze[i])
+    printMaze(maze_cols_len, maze_rows_len, maze)
+
     print("The Maze Coordinates:")
-    for row in maze_coords:
-        print(row)
+    printMazeCoordinates(maze_coords)
+
+
+step_counter = 0
+maze_start.append(step_counter)
+list_coords = []
+searchNeighboringCoords(maze_start, [])
+
+
+if (debug):
     print("List of coordinates:")
     for list_num in range (len(list_coords)):
-    	print("Solution %d: %s" % (list_num,list_coords[list_num]))
+    	print("\nSolution %d: %s\nSolution %d:" % (list_num, list_coords[list_num], list_num))
+    	printMazeSolution(maze_cols_len, maze_rows_len, maze, list_coords[list_num])
     print("Total solutions found: %d" % len(list_coords))
