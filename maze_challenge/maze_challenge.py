@@ -111,14 +111,47 @@ Print maze solution in terms of X, G, S and numbers for each step-cell
 """
 def printMazeSolution(maze_columns_length, maze_rows_length, maze_shaped, maze_solution):
 	maze_shaped_solution = copy.deepcopy(maze_shaped)
-	# print("maze_shaped_copy: ", maze_shaped_solution)
-	# print("maze_shaped_copy[0]: ", maze_shaped_solution[0])
-	# print("maze_shaped_copy[0][1]: ", maze_shaped_solution[0][1])
+	
 	for solution_step in maze_solution:
 		maze_shaped_solution[solution_step[0] - 1][solution_step[1] - 1] = str(solution_step[2])
 
-	for row in maze_shaped_solution:
-		print(row)
+	printMazeCoordinates(maze_shaped_solution)
+
+"""
+A better formatted printMazeSolution
+"""
+def printFormattedMazeSolution(maze_columns_length, maze_rows_length, maze_shaped, maze_solution):
+	maze_shaped_solution = copy.deepcopy(maze_shaped)
+
+	for solution_step in maze_solution:
+		maze_shaped_solution[solution_step[0] - 1][solution_step[1] - 1] = str(solution_step[2])
+
+	for row in range (len(maze_shaped_solution)):
+		for column in range (len(maze_shaped_solution[row])):
+			maze_cell = maze_shaped_solution[row][column]
+			if (len(maze_cell) == 1):
+				maze_cell = " " + maze_cell + " " if isInt(maze_cell) else 3 * maze_cell
+			elif (len(maze_cell) == 2):
+				maze_cell = " " + maze_cell
+			maze_shaped_solution[row][column] = maze_cell
+
+	s = [[str(e) for e in row] for row in maze_shaped_solution]
+	lens = [max(map(len, col)) for col in zip(*s)]
+	fmt = '\t'.join('{{:{}}}'.format(x) for x in lens)
+	table = [fmt.format(*row) for row in s]
+	print ('\n'.join(table))
+
+	# printMazeCoordinates(maze_shaped_solution)
+
+"""
+Helper method to check if a string represents an int
+"""
+def isInt(string):
+    try: 
+        int(string)
+        return True
+    except ValueError:
+        return False
 
 """
 Call this method recursively and search for the exit path.
@@ -218,5 +251,5 @@ if (debug):
     print("List of coordinates:")
     for list_num in range (len(list_coords)):
     	print("\nSolution %d: %s\nSolution %d:" % (list_num, list_coords[list_num], list_num))
-    	printMazeSolution(maze_cols_len, maze_rows_len, maze, list_coords[list_num])
+    	printFormattedMazeSolution(maze_cols_len, maze_rows_len, maze, list_coords[list_num])
     print("Total solutions found: %d" % len(list_coords))
