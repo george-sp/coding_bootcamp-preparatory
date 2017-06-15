@@ -87,6 +87,22 @@ def getMazeBlocks(height, width):
                 block_points.append(maze_coords[r][c])
     return block_points
 
+"""
+Find the best maze solution(s)
+"""
+def getBestSolutions(maze_solutions):
+	best_solutions = []
+	solution_steps = []
+	min_steps = 0
+	for solution in maze_solutions:
+		solution_steps.append(solution[-1][-1])
+
+	min_steps = min(solution_steps)
+	
+	for best_solution_index in [i for i, steps in enumerate(solution_steps) if steps == min_steps]:
+		best_solutions.append(maze_solutions[best_solution_index])
+	
+	return best_solutions
 
 """
 Print maze in terms of X, G, S
@@ -140,8 +156,6 @@ def printFormattedMazeSolution(maze_columns_length, maze_rows_length, maze_shape
 	fmt = '\t'.join('{{:{}}}'.format(x) for x in lens)
 	table = [fmt.format(*row) for row in s]
 	print ('\n'.join(table))
-
-	# printMazeCoordinates(maze_shaped_solution)
 
 """
 Helper method to check if a string represents an int
@@ -252,4 +266,9 @@ if (debug):
     for list_num in range (len(list_coords)):
     	print("\nSolution %d: %s\nSolution %d:" % (list_num, list_coords[list_num], list_num))
     	printFormattedMazeSolution(maze_cols_len, maze_rows_len, maze, list_coords[list_num])
-    print("Total solutions found: %d" % len(list_coords))
+
+print("\nTotal solutions found: %d" % len(list_coords))
+print("Best Solutions\n--------------")
+for i, best_solution in enumerate(getBestSolutions(list_coords)):
+	print("\nSolution ", i, ":")
+	printFormattedMazeSolution(maze_cols_len, maze_rows_len, maze, best_solution)
