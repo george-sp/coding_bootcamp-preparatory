@@ -4,13 +4,15 @@ import copy
 import argparse
 
 # Create a parser
-parser = argparse.ArgumentParser(prog="Maze Challenge", description='Solve maze challenges using recursion.')
+parser = argparse.ArgumentParser(prog="Maze Challenge", description='Solve maze challenges using recursion.', epilog='Have fun!')
 parser.add_argument('-d', '--debug', action='store_true', dest='debug_mode', help='define debug_mode mode')
+parser.add_argument('maze_input_file', nargs='?', type=argparse.FileType('r'), help='specify a txt file with a maze')
 args = parser.parse_args()
 
 # If debug_mode is True, debbuging messages will be logged on execution.
 debug_mode = args.debug_mode
-print("debug_mode = ", debug_mode)
+maze_input_file = args.maze_input_file
+
 
 """
 Prompt user to create a maze now(row by row input)
@@ -21,8 +23,12 @@ def getMaze():
 
     Instructions:
         1.Create the maze row by row.
-        2.Enter an empty row to quit.
-        3.Enter a txt file.
+        	- S: start
+        	- X: block
+        	- G: goal
+        	- _: space (underscore)
+        	- <Enter>: quit maze editing.
+        2.Enter a txt file.
     """
     # Display the Instructions.
     print(prompt_message)
@@ -239,8 +245,18 @@ def searchNeighboringCoords(coord, coords_path):
 """
 Run the game
 """
+if (maze_input_file):
+	maze_file = maze_input_file.name
+	if ('.txt' in maze_file):
+		maze_file = open(maze_file, encoding="utf-8")
+		maze = maze_file.read()
+	else:
+		parser.print_help()
+		exit()
+else:
+	maze = getMaze()
 
-maze = getMaze().split("\n")
+maze = maze.split("\n")
 maze_rows_len, maze_cols_len = getMazeDimensions(maze)
 maze = shapeMaze(maze, maze_rows_len)
 maze_coords = getMazeCoordinates(height=maze_rows_len, width=maze_cols_len)
