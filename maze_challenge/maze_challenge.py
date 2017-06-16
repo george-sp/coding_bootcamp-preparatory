@@ -4,7 +4,7 @@ import copy
 import argparse
 
 # Create a parser
-parser = argparse.ArgumentParser(prog="Maze Challenge", description='Solve maze challenges using recursion.', epilog='Have fun!')
+parser = argparse.ArgumentParser(prog="maze_challenge.py", description='Solve maze challenges using recursion.', epilog='Have fun!')
 parser.add_argument('-d', '--debug', action='store_true', dest='debug_mode', help='define debug_mode mode')
 parser.add_argument('maze_input_file', nargs='?', type=argparse.FileType('r'), help='specify a txt file with a maze')
 args = parser.parse_args()
