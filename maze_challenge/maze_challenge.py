@@ -1,9 +1,16 @@
 #! /usr/bin/env python3
 
 import copy
+import argparse
 
-# If debug is True, debbuging messages will be logged on execution.
-debug = True
+# Create a parser
+parser = argparse.ArgumentParser(prog="Maze Challenge", description='Solve maze challenges using recursion.')
+parser.add_argument('-d', '--debug', action='store_true', dest='debug_mode', help='define debug_mode mode')
+args = parser.parse_args()
+
+# If debug_mode is True, debbuging messages will be logged on execution.
+debug_mode = args.debug_mode
+print("debug_mode = ", debug_mode)
 
 """
 Prompt user to create a maze now(row by row input)
@@ -171,18 +178,18 @@ def isInt(string):
 Call this method recursively and search for the exit path.
 """
 def searchNeighboringCoords(coord, coords_path):
-	if (debug): print("Current cell:", coord)
-	if (debug): print("Current path:", coords_path)
+	if (debug_mode): print("Current cell:", coord)
+	if (debug_mode): print("Current path:", coords_path)
 
 	# Add the current coord to the path
 	cells_path = list(coords_path)
 	cells_path.append(coord)
 
 	if (coord[0] == maze_goal[0] and coord[1] == maze_goal[1]):
-		print("========================================\nSolution Found: %s\n========================================\n" % cells_path)
+		if (debug_mode): print("========================================\nSolution Found: %s\n========================================\n" % cells_path)
 		list_coords.append(cells_path)
 
-	if (debug): print("Blocks: ", maze_blocks)
+	if (debug_mode): print("Blocks: ", maze_blocks)
 
     # Create a list of the four adjacent cells
     # with a counter variable of the current element's counter variable +1.
@@ -193,7 +200,7 @@ def searchNeighboringCoords(coord, coords_path):
 	[coord[0], coord[1] + 1]  # right adjacent
 	]
 
-	if (debug): print("Adjacent cells:", adjacent_coords)
+	if (debug_mode): print("Adjacent cells:", adjacent_coords)
 
     # Use a copy the list so that we can iterate and modify at the same time.
 	adjacent_coords_copy = adjacent_coords.copy()
@@ -203,11 +210,11 @@ def searchNeighboringCoords(coord, coords_path):
 			cell[0] <= 0 or 
 			cell[1] > maze_cols_len or
 			cell[1] <= 0):
-			if (debug): print("Remove cell: %s, as Out of Border" % cell)
+			if (debug_mode): print("Remove cell: %s, as Out of Border" % cell)
 			adjacent_coords.remove(cell)
         # Check if the cell is a block.
 		elif (cell in maze_blocks):
-			if (debug): print("Remove cell: %s as in Blocks" % cell)
+			if (debug_mode): print("Remove cell: %s as in Blocks" % cell)
 			adjacent_coords.remove(cell)
 		# Check if the cell is already in the current path
 		else:
@@ -215,18 +222,18 @@ def searchNeighboringCoords(coord, coords_path):
 				# Remove the step_counter so we can compare them
 				cell_in_path = cell_in_path[:-1]
 				if cell_in_path == cell:
-					if (debug): print("Remove cell: %s, as Already in Path" % cell)
+					if (debug_mode): print("Remove cell: %s, as Already in Path" % cell)
 					adjacent_coords.remove(cell)
 
 	if not adjacent_coords:
-		if (debug): print("====================> Not any available adjacent cells\n")
+		if (debug_mode): print("====================> Not any available adjacent cells\n")
 		return None
 	else:
-		if (debug): print("Adjacent cells available:", adjacent_coords)
+		if (debug_mode): print("Adjacent cells available:", adjacent_coords)
 		for cell in adjacent_coords:
 			cell.append(coord[2] + 1)
 
-			if (debug): print("searchNeighboringCoord(%s, %s\n" % (cell, cells_path))
+			if (debug_mode): print("searchNeighboringCoord(%s, %s\n" % (cell, cells_path))
 			searchNeighboringCoords(cell, cells_path)
 
 """
@@ -240,7 +247,7 @@ maze_coords = getMazeCoordinates(height=maze_rows_len, width=maze_cols_len)
 maze_start, maze_goal = getMazeStartEnd(height=maze_rows_len, width=maze_cols_len)
 maze_blocks = getMazeBlocks(height=maze_rows_len, width=maze_cols_len)
 
-if (debug):
+if (debug_mode):
     print("--------------------------\n\tDebugging\n--------------------------")
     print("Number of rows:", maze_rows_len)
     print("Number of columns:", maze_cols_len)
@@ -261,7 +268,7 @@ list_coords = []
 searchNeighboringCoords(maze_start, [])
 
 
-if (debug):
+if (debug_mode):
     print("List of coordinates:")
     for list_num in range (len(list_coords)):
     	print("\nSolution %d: %s\nSolution %d:" % (list_num, list_coords[list_num], list_num))
