@@ -1,5 +1,18 @@
-# If debug is True, debbuging messages will be logged on execution.
-debug = True
+#! /usr/bin/env python3
+
+import copy
+import argparse
+
+# Create a parser
+parser = argparse.ArgumentParser(prog="maze_challenge.py", description='Solve maze challenges using recursion.', epilog='Have fun!')
+parser.add_argument('-d', '--debug', action='store_true', dest='debug_mode', help='define debug_mode mode')
+parser.add_argument('maze_input_file', nargs='?', type=argparse.FileType('r'), help='specify a txt file with a maze')
+args = parser.parse_args()
+
+# If debug_mode is True, debbuging messages will be logged on execution.
+debug_mode = args.debug_mode
+maze_input_file = args.maze_input_file
+
 
 """
 Prompt user to create a maze now(row by row input)
@@ -10,8 +23,12 @@ def getMaze():
 
     Instructions:
         1.Create the maze row by row.
-        2.Enter an empty row to quit.
-        3.Enter a txt file.
+        	- S: start
+        	- X: block
+        	- G: goal
+        	- _: space (underscore)
+        	- <Enter>: quit maze editing.
+        2.Enter a txt file.
     """
     # Display the Instructions.
     print(prompt_message)
@@ -83,62 +100,198 @@ def getMazeBlocks(height, width):
                 block_points.append(maze_coords[r][c])
     return block_points
 
+"""
+Find the best maze solution(s)
+"""
+def getBestSolutions(maze_solutions):
+	best_solutions = []
+	solution_steps = []
+	min_steps = 0
+	for solution in maze_solutions:
+		solution_steps.append(solution[-1][-1])
 
-maze = getMaze().split("\n")
+	min_steps = min(solution_steps)
+	
+	for best_solution_index in [i for i, steps in enumerate(solution_steps) if steps == min_steps]:
+		best_solutions.append(maze_solutions[best_solution_index])
+	
+	return best_solutions
+
+"""
+Print maze in terms of X, G, S
+"""
+def printMaze(maze_columns_length, maze_rows_length, maze_shaped):
+	print("  ", end="")
+	for i in range (maze_cols_len):
+		print(" ", i + 1, " ", end="")
+	print()
+	for i in range (maze_rows_len):
+		print(i + 1, maze[i])
+
+"""
+Print the  coordinates of the maze
+"""
+def printMazeCoordinates(maze_coordinates):
+	for row in maze_coordinates:
+		print(row)
+
+"""
+Print maze solution in terms of X, G, S and numbers for each step-cell
+"""
+def printMazeSolution(maze_columns_length, maze_rows_length, maze_shaped, maze_solution):
+	maze_shaped_solution = copy.deepcopy(maze_shaped)
+	
+	for solution_step in maze_solution:
+		maze_shaped_solution[solution_step[0] - 1][solution_step[1] - 1] = str(solution_step[2])
+
+	printMazeCoordinates(maze_shaped_solution)
+
+"""
+A better formatted printMazeSolution
+"""
+def printFormattedMazeSolution(maze_columns_length, maze_rows_length, maze_shaped, maze_solution):
+	maze_shaped_solution = copy.deepcopy(maze_shaped)
+
+	for solution_step in maze_solution:
+		maze_shaped_solution[solution_step[0] - 1][solution_step[1] - 1] = str(solution_step[2])
+
+	for row in range (len(maze_shaped_solution)):
+		for column in range (len(maze_shaped_solution[row])):
+			maze_cell = maze_shaped_solution[row][column]
+			if (len(maze_cell) == 1):
+				maze_cell = " " + maze_cell + " " if isInt(maze_cell) else 3 * maze_cell
+			elif (len(maze_cell) == 2):
+				maze_cell = " " + maze_cell
+			maze_shaped_solution[row][column] = maze_cell
+
+	s = [[str(e) for e in row] for row in maze_shaped_solution]
+	lens = [max(map(len, col)) for col in zip(*s)]
+	fmt = '\t'.join('{{:{}}}'.format(x) for x in lens)
+	table = [fmt.format(*row) for row in s]
+	print ('\n'.join(table))
+
+"""
+Helper method to check if a string represents an int
+"""
+def isInt(string):
+    try: 
+        int(string)
+        return True
+    except ValueError:
+        return False
+
+"""
+Call this method recursively and search for the exit path.
+"""
+def searchNeighboringCoords(coord, coords_path):
+	if (debug_mode): print("Current cell:", coord)
+	if (debug_mode): print("Current path:", coords_path)
+
+	# Add the current coord to the path
+	cells_path = list(coords_path)
+	cells_path.append(coord)
+
+	if (coord[0] == maze_goal[0] and coord[1] == maze_goal[1]):
+		if (debug_mode): print("========================================\nSolution Found: %s\n========================================\n" % cells_path)
+		list_coords.append(cells_path)
+
+	if (debug_mode): print("Blocks: ", maze_blocks)
+
+    # Create a list of the four adjacent cells
+    # with a counter variable of the current element's counter variable +1.
+	adjacent_coords = [
+	[coord[0] - 1, coord[1]], # top adjacent
+	[coord[0], coord[1] - 1], # left adjacent
+	[coord[0] + 1, coord[1]], # bottom adjacent
+	[coord[0], coord[1] + 1]  # right adjacent
+	]
+
+	if (debug_mode): print("Adjacent cells:", adjacent_coords)
+
+    # Use a copy the list so that we can iterate and modify at the same time.
+	adjacent_coords_copy = adjacent_coords.copy()
+	for cell in adjacent_coords_copy:
+        # Check if the cell is out of the border.
+		if (cell[0] > maze_rows_len or
+			cell[0] <= 0 or 
+			cell[1] > maze_cols_len or
+			cell[1] <= 0):
+			if (debug_mode): print("Remove cell: %s, as Out of Border" % cell)
+			adjacent_coords.remove(cell)
+        # Check if the cell is a block.
+		elif (cell in maze_blocks):
+			if (debug_mode): print("Remove cell: %s as in Blocks" % cell)
+			adjacent_coords.remove(cell)
+		# Check if the cell is already in the current path
+		else:
+			for cell_in_path in coords_path:
+				# Remove the step_counter so we can compare them
+				cell_in_path = cell_in_path[:-1]
+				if cell_in_path == cell:
+					if (debug_mode): print("Remove cell: %s, as Already in Path" % cell)
+					adjacent_coords.remove(cell)
+
+	if not adjacent_coords:
+		if (debug_mode): print("====================> Not any available adjacent cells\n")
+		return None
+	else:
+		if (debug_mode): print("Adjacent cells available:", adjacent_coords)
+		for cell in adjacent_coords:
+			cell.append(coord[2] + 1)
+
+			if (debug_mode): print("searchNeighboringCoord(%s, %s\n" % (cell, cells_path))
+			searchNeighboringCoords(cell, cells_path)
+
+"""
+Run the game
+"""
+if (maze_input_file):
+	maze_file = maze_input_file.name
+	if ('.txt' in maze_file):
+		maze_file = open(maze_file, encoding="utf-8")
+		maze = maze_file.read()
+	else:
+		parser.print_help()
+		exit()
+else:
+	maze = getMaze()
+
+maze = maze.split("\n")
 maze_rows_len, maze_cols_len = getMazeDimensions(maze)
 maze = shapeMaze(maze, maze_rows_len)
 maze_coords = getMazeCoordinates(height=maze_rows_len, width=maze_cols_len)
 maze_start, maze_goal = getMazeStartEnd(height=maze_rows_len, width=maze_cols_len)
 maze_blocks = getMazeBlocks(height=maze_rows_len, width=maze_cols_len)
 
-# List of coordinates which will be used as a queue.
-# The queue will be initialized with one coordinate, the end coordinate.
-# Each coordinate will also have a counter variable attached.
-step_counter = 0
-maze_goal.append(step_counter)
-list_coords = [maze_goal]
-# Go through every element in the queue.
-for coord in list_coords:
-    # Create a list of the four adjacent cells
-    # with a counter variable of the current element's counter variable +1.
-    adjacent_coords = [
-    [coord[0] - 1, coord[1]], # top adjacent
-    [coord[0], coord[1] - 1], # left adjacent
-    [coord[0] + 1, coord[1]], # bottom adjacent
-    [coord[0], coord[1] + 1]  # right adjacent
-    ]
-
-    # Use a copy the list so that we can iterate and modify at the same time.
-    adjacent_coords_copy = adjacent_coords.copy()
-    for cell in adjacent_coords_copy:
-        # Check if the cell is out of the border.
-        if (cell[0] > maze_rows_len or cell[1] > maze_cols_len):
-            adjacent_coords.remove(cell)
-        # Check if the cell is a block.
-        elif (cell in maze_blocks):
-            adjacent_coords.remove(cell)
-
-
-    if (debug):
-        print("Adjacent cells:", adjacent_coords)
-
-
-if (debug):
-    print("  Debugging  \n-------------")
+if (debug_mode):
+    print("--------------------------\n\tDebugging\n--------------------------")
     print("Number of rows:", maze_rows_len)
     print("Number of columns:", maze_cols_len)
     print("Start:", maze_start)
     print("Goal:", maze_goal)
     print("Blocks:", maze_blocks)
+
     print("The Maze:")
-    print("  ", end="")
-    for i in range (maze_cols_len):
-        print(" ", i + 1, " ", end="")
-    print()
-    for i in range (maze_rows_len):
-        print(i + 1, maze[i])
+    printMaze(maze_cols_len, maze_rows_len, maze)
+
     print("The Maze Coordinates:")
-    for row in maze_coords:
-        print(row)
+    printMazeCoordinates(maze_coords)
+
+
+step_counter = 0
+maze_start.append(step_counter)
+list_coords = []
+searchNeighboringCoords(maze_start, [])
+
+
+if (debug_mode):
     print("List of coordinates:")
-    print(list_coords)
+    for list_num in range (len(list_coords)):
+    	print("\nSolution %d: %s\nSolution %d:" % (list_num, list_coords[list_num], list_num))
+    	printFormattedMazeSolution(maze_cols_len, maze_rows_len, maze, list_coords[list_num])
+
+print("\nTotal solutions found: %d" % len(list_coords))
+print("Best Solutions\n--------------")
+for i, best_solution in enumerate(getBestSolutions(list_coords)):
+	print("\nSolution ", i, ":")
+	printFormattedMazeSolution(maze_cols_len, maze_rows_len, maze, best_solution)
